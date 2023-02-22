@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자바스크립트 json 데이터 출력하기</title>
+  <!-- 폰트어썸 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<!-- 제이쿼리 라이브러리  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- jQuery UI 라이브러리 -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<style>
+  #table table{
+    border-collapse: collapse;
+  }
+  #table th{
+    border: 1px solid #333;
+  }
+  #table td{
+    border: 1px solid #333;
+  }
+</style>
+<script>
+  $(function(){
+    let div = $('#table');
+    let html = '';
+    $.getJSON('./data/test_drive.json', function(data){
+      html+=`<table>`;
+        html+=`<caption>시승신청목록</caption>`;
+      // 대길성님 버전 각 태그마다 제목 다나옴
+      // for(key in data){
+      //   document.write('<tr>');
+      //   for(let c in data[key]){
+      //     document.write('<td>'+c+' : '+data[key][c]+'</td>');
+      //   }
+      //   document.write('</tr>');
+      // }
+      for(key in data){
+        if(key == 0){
+          html+=`<tr>`;
+          //큰 데이터의 키값 프로퍼티들을 꺼내옴 num, name, phone...
+          for(let desc in data[key]){
+            html+=`<th>${desc}</th>`;
+          }
+          html+=`</tr>`;
+        }
+        
+        for(let desc in data[key]){
+          html+=`<td>${data[key][desc]}</td>`;
+        }
+        html+=`</tr>`;
+      }
+      html+=`</table>`;
+      div.html(html);
+    });
+  });
+</script>
+</head>
+<body>
+  <h2>자바스크립트 json 데이터 출력하기</h2>
+  <p>닷홈 SQL데이터 베이스에 저장된 'test_drive' 테이블의 자료를 'json' 파일로 저장하여 자바스크립트로 출력해보기</p>
+  <div id="table">
+  </div>
+
+  
+</body>
+</html>
